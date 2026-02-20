@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach PES & Football Life - Taktik & Modding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-microchip text-blue-500 text-2xl"></i>
+                    <span class="text-xl font-bold tracking-tight">PES<span class="text-blue-500">LIFE</span> COACH</span>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-widest">
+                    <a href="#home" class="hover:text-blue-400 transition-colors">Beranda</a>
+                    <a href="#series" class="hover:text-blue-400 transition-colors">Episode</a>
+                    <a href="#mods" class="hover:text-blue-400 transition-colors">Mod & Taktik</a>
+                    <a href="https://youtube.com" class="text-red-500 hover:text-red-400">YouTube</a>
+                    <a href="https://tiktok.com" class="text-cyan-400 hover:text-cyan-300">TikTok</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero-section min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-6 tracking-widest uppercase">
+                    PES 2021 & Football Life Expert
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-none mb-6">
+                    MASTER THE <br><span class="gradient-text">MODERN GAME</span>
+                </h1>
+                <p class="text-lg text-slate-400 mb-8 max-w-lg">
+                    Bedah taktik Master League, tutorial instalasi Football Life 26, dan update Facepad terbaru. Konten edukasi sepak bola virtual setiap hari.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#series" class="bg-white text-slate-950 font-bold py-4 px-8 rounded-full hover:bg-blue-500 hover:text-white transition-all">
+                        Tonton Episode
+                    </a>
+                    <a href="#mods" class="border border-slate-700 py-4 px-8 rounded-full font-bold hover:bg-slate-800 transition-all">
+                        Cek Mod Terbaru
+                    </a>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur opacity-30"></div>
+                <div class="relative bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-2xl">
+                    <div class="flex items-center gap-2 mb-4 p-2 border-b border-slate-800">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="text-xs text-slate-500 ml-2">Tactic_Analysis_FL26.exe</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1552667466-07770ae110d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Analisis Taktik" class="rounded-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Series (TikTok & YT) -->
+    <section id="series" class="py-24 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Series Terpopuler</h2>
+                    <p class="text-slate-400">Ikuti perjalanan kami membangun tim dari nol.</p>
+                </div>
+                <div class="flex gap-4">
+                    <i class="fab fa-tiktok text-2xl hover:text-pink-500 cursor-pointer transition-colors"></i>
+                    <i class="fab fa-youtube text-2xl hover:text-red-500 cursor-pointer transition-colors"></i>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Episode 1 -->
+                <div class="video-card group cursor-pointer">
+                    <div class="relative aspect-video rounded-xl overflow-hidden mb-4 border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Thumbnail">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-950">
+                                <i class="fas fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-blue-600 text-[10px] font-bold px-2 py-1 rounded uppercase">FL26 Series</div>
+                    </div>
+                    <h3 class="font-bold text-lg text-white mb-1 group-hover:text-blue-400 transition-colors">Road to Glory: Episode 01 - Memilih Tim</h3>
+                    <p class="text-sm text-slate-500">YouTube • 15 Menit yang lalu</p>
+                </div>
+
+                <!-- Episode 2 -->
+                <div class="video-card group cursor-pointer">
+                    <div class="relative aspect-[9/16] max-w-[200px] mx-auto rounded-xl overflow-hidden mb-4 border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="TikTok Thumbnail">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                            <span class="text-xs font-bold flex items-center gap-2"><i class="fab fa-tiktok"></i> 250k Views</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-center text-white mb-1 group-hover:text-blue-400 transition-colors">Trik Free Kick Cristiano!</h3>
+                    <p class="text-sm text-center text-slate-500">TikTok Short</p>
+                </div>
+
+                <!-- Episode 3 -->
+                <div class="video-card group cursor-pointer">
+                    <div class="relative aspect-video rounded-xl overflow-hidden mb-4 border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Thumbnail">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-950">
+                                <i class="fas fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-slate-700 text-[10px] font-bold px-2 py-1 rounded uppercase">Tutorial</div>
+                    </div>
+                    <h3 class="font-bold text-lg text-white mb-1 group-hover:text-blue-400 transition-colors">Cara Instal Football Life 26 Lengkap!</h3>
+                    <p class="text-sm text-slate-500">YouTube • 2 Hari yang lalu</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mods & Tactics -->
+    <section id="mods" class="py-24 bg-slate-900 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all">
+                        <i class="fas fa-file-code text-blue-500 text-3xl mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Gameplay Mod</h4>
+                        <p class="text-xs text-slate-400">Realistis dribbling & ball physics khusus PES 21.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all">
+                        <i class="fas fa-user-circle text-blue-500 text-3xl mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Mega Facepad</h4>
+                        <p class="text-xs text-slate-400">Update 500+ wajah pemain muda (Wonderkids).</p>
+                    </div>
+                    <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all">
+                        <i class="fas fa-shield-alt text-blue-500 text-3xl mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Kit Pack 25/26</h4>
+                        <p class="text-xs text-slate-400">Jersey terbaru untuk semua liga top Eropa.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all">
+                        <i class="fas fa-clipboard-list text-blue-500 text-3xl mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Tactics Folder</h4>
+                        <p class="text-xs text-slate-400">Formasi OP untuk Master League & Online.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <h2 class="text-4xl font-extrabold text-white mb-6 leading-tight">Dapatkan Mod & Taktik Terbaik</h2>
+                <p class="text-slate-400 mb-8">Saya mengkurasi mod terbaik dari komunitas internasional agar Football Life 26 Anda terasa seperti game generasi terbaru.</p>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center gap-3 text-slate-300">
+                        <i class="fas fa-check-circle text-green-500"></i> Kompatibel dengan PES 2021 Original
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-300">
+                        <i class="fas fa-check-circle text-green-500"></i> Support Full Version Football Life
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-300">
+                        <i class="fas fa-check-circle text-green-500"></i> Gratis untuk Subscriber
+                    </li>
+                </ul>
+                <button class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 py-4 px-10 rounded-full font-bold transition-all shadow-lg shadow-blue-600/20 uppercase tracking-widest text-sm">
+                    Kunjungi Discord / Link Download
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Stats -->
+    <section class="py-12 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-around gap-8">
+            <div class="text-center">
+                <span class="block text-3xl font-bold text-white">50K+</span>
+                <span class="text-slate-500 text-xs uppercase tracking-widest">TikTok Followers</span>
+            </div>
+            <div class="text-center">
+                <span class="block text-3xl font-bold text-white">12K+</span>
+                <span class="text-slate-500 text-xs uppercase tracking-widest">YT Subscribers</span>
+            </div>
+            <div class="text-center">
+                <span class="block text-3xl font-bold text-white">1M+</span>
+                <span class="text-slate-500 text-xs uppercase tracking-widest">Total Likes</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 pt-20 pb-10 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 mb-8">
+                <i class="fas fa-microchip text-blue-500 text-3xl"></i>
+                <span class="text-2xl font-bold text-white tracking-tighter">PESLIFE COACH</span>
+            </div>
+            <div class="flex justify-center space-x-6 mb-10 text-slate-400">
+                <a href="#" class="hover:text-blue-500 transition-colors"><i class="fab fa-tiktok text-2xl"></i></a>
+                <a href="#" class="hover:text-red-500 transition-colors"><i class="fab fa-youtube text-2xl"></i></a>
+                <a href="#" class="hover:text-pink-500 transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="hover:text-blue-400 transition-colors"><i class="fab fa-discord text-2xl"></i></a>
+            </div>
+            <p class="text-slate-600 text-sm">&copy; 2026 PESLIFE Coach. Modded with ❤️ for the Community.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

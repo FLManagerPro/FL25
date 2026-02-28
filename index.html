@@ -198,10 +198,9 @@
     <!-- Firebase SDK & Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Konfigurasi Baru Anda
         const firebaseConfig = {
             apiKey: "AIzaSyDuqSRQ8osG1Cv13yDwTwBq63fyEKpaqkM",
             authDomain: "website-20fca.firebaseapp.com",
@@ -238,24 +237,26 @@
             navigate('home');
         }
 
-        function setupListeners() {
+        async function setupListeners() {
             if (!user) return;
             const voteRef = doc(db, 'artifacts', appId, 'public', 'data', 'project-votes');
-            onSnapshot(voteRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    voteData = docSnap.data();
-                    renderVotes();
-                } else {
-                    setDoc(voteRef, { option1: 0, option2: 0, option3: 0, total: 0 });
+            const docSnap = await getDoc(voteRef);
+            if (!docSnap.exists()) {
+                await setDoc(voteRef, { option1: 0, option2: 0, option3: 0, total: 0 });
+            }
+            onSnapshot(voteRef, (snap) => {
+                if (snap.exists()) {
+                    voteData = snap.data();
+                    if(document.getElementById('vote-container')) renderVotes();
                 }
-            }, (err) => console.log("Stream Vote Error:", err.code));
+            });
 
             const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
             onSnapshot(commentsRef, (snapshot) => {
                 comments = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
                                     .sort((a, b) => b.timestamp - a.timestamp);
-                renderComments();
-            }, (err) => console.log("Stream Comment Error:", err.code));
+                if(document.getElementById('comments-list')) renderComments();
+            });
         }
 
         window.castVote = async (option) => {
@@ -294,23 +295,18 @@
             try {
                 btn.disabled = true;
                 statusBox.innerText = "MENGIRIM SINYAL...";
-                statusBox.style.color = "#ffaa00";
-                
                 const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
                 await addDoc(colRef, { name, message: msg, timestamp: Date.now(), uid: user.uid });
-                
                 nameInput.value = '';
                 msgInput.value = '';
                 statusBox.innerText = "TRANSMISI BERHASIL!";
                 statusBox.style.color = "#00ff88";
-                
                 setTimeout(() => {
                     statusBox.innerText = "MENUNGGU SINYAL...";
                     statusBox.style.color = "#555";
                 }, 3000);
             } catch(e) {
                 statusBox.innerText = "TRANSMISI GAGAL!";
-                statusBox.style.color = "#ff0044";
             } finally {
                 btn.disabled = false;
             }
@@ -420,10 +416,98 @@
                 renderVotes();
                 renderComments();
             } else if (page === 'master-league') {
-                content.innerHTML = `<section class="page-fade pt-32 pb-20 px-6 container mx-auto max-w-7xl">...</section>`;
-                // Bagian ML dan Coach tetap sama seperti sebelumnya
+                content.innerHTML = `
+                <section class="page-fade pt-32 pb-20 px-6 container mx-auto max-w-7xl">
+                    <div class="mb-16 border-l-4 border-fl-red pl-6">
+                        <h2 class="text-6xl font-cyber font-bold text-white tracking-tighter uppercase italic">MASTER <span class="text-fl-red">LEAGUE</span></h2>
+                        <p class="text-gray-500 font-display text-2xl uppercase tracking-widest">Football Life 2026 Universe</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card-fl-red group cursor-pointer overflow-hidden rounded-lg" onclick="playVideo('zI_u-61B78s')">
+                            <div class="relative aspect-video overflow-hidden">
+                                <img src="https://img.youtube.com/vi/zI_u-61B78s/maxresdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-fl-red/20 backdrop-blur-sm">
+                                    <i class="fa-solid fa-play text-5xl text-white"></i>
+                                </div>
+                            </div>
+                            <div class="p-6 border-t border-fl-red/20">
+                                <span class="text-[10px] font-cyber text-fl-red font-bold uppercase tracking-[0.3em]">EPISODE 24</span>
+                                <h3 class="text-xl font-display font-bold text-white mt-2 leading-tight uppercase group-hover:text-fl-red transition-colors">DERBY PENENTUAN JUARA!</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="card-fl-red group cursor-pointer overflow-hidden rounded-lg" onclick="playVideo('pSAt2xWfHuo')">
+                            <div class="relative aspect-video overflow-hidden">
+                                <img src="https://img.youtube.com/vi/pSAt2xWfHuo/maxresdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-fl-red/20 backdrop-blur-sm">
+                                    <i class="fa-solid fa-play text-5xl text-white"></i>
+                                </div>
+                            </div>
+                            <div class="p-6 border-t border-fl-red/20">
+                                <span class="text-[10px] font-cyber text-fl-red font-bold uppercase tracking-[0.3em]">EPISODE 23</span>
+                                <h3 class="text-xl font-display font-bold text-white mt-2 leading-tight uppercase group-hover:text-fl-red transition-colors">TRANSFER PANAS MUSIM DINGIN</h3>
+                            </div>
+                        </div>
+
+                        <div class="card-fl-red p-8 flex flex-col items-center justify-center text-center border-dashed border-2 border-fl-red/20">
+                            <i class="fa-solid fa-circle-nodes text-4xl text-fl-red/30 mb-6"></i>
+                            <h3 class="font-cyber text-xs text-gray-500 uppercase tracking-widest">ARSIP EPISODE LAINNYA SEDANG DIINKUBASI...</h3>
+                            <a href="https://www.youtube.com/@Touchline_ID" target="_blank" class="mt-6 text-fl-red font-cyber text-[10px] tracking-widest hover:underline uppercase">LIHAT FULL PLAYLIST</a>
+                        </div>
+                    </div>
+                </section>`;
             } else if (page === 'coach') {
-                content.innerHTML = `<section class="page-fade pt-32 pb-20 px-6 container mx-auto max-w-6xl">...</section>`;
+                content.innerHTML = `
+                <section class="page-fade pt-32 pb-20 px-6 container mx-auto max-w-6xl">
+                    <div class="text-center mb-20">
+                        <h2 class="text-6xl font-cyber font-bold text-white uppercase tracking-tighter italic">THE <span class="text-fl-red">TACTICIAN</span></h2>
+                        <div class="h-1 w-24 bg-fl-red mx-auto mt-4"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div class="relative group">
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-fl-red/30 to-fl-orange/30 blur-2xl group-hover:blur-3xl transition-all opacity-50"></div>
+                            <div class="relative card-fl-red p-2 border-2 border-fl-red/30">
+                                <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=1000" class="w-full grayscale group-hover:grayscale-0 transition-all duration-700">
+                                <div class="absolute bottom-6 right-6 bg-fl-red p-4 skew-x-[-12deg]">
+                                    <span class="block skew-x-[12deg] text-white font-cyber text-sm font-bold uppercase tracking-widest">LICENSE: PRO</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-8">
+                            <div class="border-l-4 border-fl-red pl-6">
+                                <h3 class="text-4xl font-display font-bold text-white uppercase italic">COACH TOUCHLINE</h3>
+                                <p class="text-fl-red font-cyber text-[11px] tracking-[0.3em] uppercase">Tactical Architect</p>
+                            </div>
+                            
+                            <p class="text-gray-400 font-body leading-relaxed text-sm">
+                                Menggabungkan analisis data modern dengan filosofi sepakbola menyerang yang pragmatis. Di dunia Football Life 2026, strategi bukan hanya tentang angka, tapi tentang bagaimana menekan lawan secara mental melalui transisi yang mematikan.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 pt-6">
+                                <div class="card-fl-red p-6 text-center">
+                                    <div class="text-3xl font-display font-bold text-white">4-3-3</div>
+                                    <div class="text-[9px] font-cyber text-fl-red uppercase tracking-widest mt-1">FAV FORMATION</div>
+                                </div>
+                                <div class="card-fl-red p-6 text-center">
+                                    <div class="text-3xl font-display font-bold text-white">HIGH</div>
+                                    <div class="text-[9px] font-cyber text-fl-red uppercase tracking-widest mt-1">PRESSING RATE</div>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-8 flex gap-6">
+                                <button onclick="showModal('DATA ANALYTICS', 'Modul analisis taktik sedang dalam tahap enkripsi.')" class="btn-fl-red flex-1 py-4 text-[10px] font-cyber font-bold tracking-widest text-white uppercase">TAKTIS ANALYSIS</button>
+                                <a href="https://www.tiktok.com/@fttouchline_id" target="_blank" class="w-14 h-14 bg-white/5 flex items-center justify-center text-white hover:text-fl-red transition-all border border-white/10 hover:border-fl-red">
+                                    <i class="fa-brands fa-tiktok text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>`;
             }
         };
 

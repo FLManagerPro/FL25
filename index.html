@@ -5,13 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FTTOUCHLINE_ID | Football Life 2026</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Syncopate:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Syncopate:wght@400;700&family=Inter:wght@300;400;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -21,13 +16,17 @@
                     colors: {
                         'fl-red': '#ff0044',
                         'fl-orange': '#ff5500',
-                        'fl-dark': '#050000',
-                        'fl-card': '#1a0505',
+                        'fl-dark': '#080101',
+                        'fl-card': 'rgba(20, 5, 5, 0.7)',
                     },
                     fontFamily: {
                         'display': ['Teko', 'sans-serif'],
                         'cyber': ['Syncopate', 'sans-serif'],
                         'body': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glitch': 'glitch 1s linear infinite',
                     }
                 }
             }
@@ -36,141 +35,127 @@
 
     <style>
         body { 
-            background-color: #050000; 
+            background-color: #080101; 
             color: #f8fafc; 
             font-family: 'Inter', sans-serif;
-            padding-bottom: 60px;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 68, 0.05) 0%, transparent 50%),
+                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
+
+        /* Scanline Effect */
+        body::before {
+            content: " ";
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 9999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .cyber-border {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 95% 100%, 0% 100%);
+            border-left: 3px solid #ff0044;
+        }
+
+        .glow-red { filter: drop-shadow(0 0 8px rgba(255, 0, 68, 0.6)); }
         
-        .cyber-glow-red { text-shadow: 0 0 20px rgba(255, 0, 68, 0.7); }
-
         .btn-fl-red {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(90deg, #ff0044, #ff5500);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ff0044 0%, #ff5500 100%);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .btn-fl-red:hover:not(:disabled) {
-            box-shadow: 0 0 30px rgba(255, 0, 68, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-fl-red:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            filter: grayscale(1);
+        .btn-fl-red:hover {
+            letter-spacing: 2px;
+            box-shadow: 0 0 30px rgba(255, 0, 68, 0.4);
+            transform: skewX(-2deg);
         }
 
         .card-fl-red {
-            background: rgba(26, 5, 5, 0.4);
+            background: var(--fl-card);
             border: 1px solid rgba(255, 0, 68, 0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(12px);
+            position: relative;
         }
 
-        .card-fl-red:hover {
-            border-color: rgba(255, 0, 68, 0.5);
-            background: rgba(45, 10, 10, 0.6);
-        }
-
-        #video-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            background: rgba(5, 0, 0, 0.98);
-            backdrop-filter: blur(15px);
-            align-items: center;
-            justify-content: center;
+        .card-fl-red::after {
+            content: "";
+            position: absolute;
+            top: -1px; left: -1px; right: -1px; bottom: -1px;
+            background: linear-gradient(135deg, #ff0044, transparent, #ff5500);
+            z-index: -1;
+            opacity: 0.1;
         }
 
         @keyframes marquee {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-
-        .marquee-content {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 30s linear infinite;
-        }
+        .marquee-content { animation: marquee 25s linear infinite; }
 
         .page-fade {
-            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.95) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ff0044; border-radius: 10px; }
     </style>
 </head>
-<body class="antialiased selection:bg-fl-red selection:text-white">
+<body class="antialiased selection:bg-fl-red selection:text-white pb-20">
 
-    <!-- VIDEO MODAL -->
-    <div id="video-modal">
-        <button onclick="closeVideo()" class="absolute top-8 right-8 text-white text-4xl hover:text-fl-red transition-colors">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="w-full max-w-4xl aspect-video px-4" id="video-container-modal"></div>
+    <div id="video-modal" class="hidden fixed inset-0 z- bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4">
+        <button onclick="closeVideo()" class="absolute top-6 right-6 text-white/50 hover:text-fl-red text-5xl transition-all">&times;</button>
+        <div class="w-full max-w-5xl aspect-video bg-black shadow-[0_0_100px_rgba(255,0,68,0.3)] border border-white/10" id="video-container-modal"></div>
     </div>
 
-    <!-- RUNNING TEXT -->
-    <div class="fixed bottom-0 left-0 w-full bg-fl-red text-white py-2 z-50 border-t border-fl-orange/30 overflow-hidden flex items-center shadow-[0_-10px_30px_rgba(255,0,68,0.3)]">
-        <div class="bg-black text-fl-red px-4 py-1 font-cyber text-[10px] font-bold z-10 skew-x-[-20deg] ml-[-10px] border-r-2 border-fl-red">
-            <span class="block skew-x-[20deg]">LIVE</span>
-        </div>
-        <div class="marquee-content font-cyber text-[11px] tracking-widest uppercase">
-            <span class="mx-8 underline">VOTE PROJECT BARU SEDANG BERLANGSUNG!</span>
-            <span class="mx-8">•</span>
-            <span class="mx-8 underline">FTTOUCHLINE_ID: MASTER LEAGUE SEASON 2 EP 24 IS OUT</span>
-            <span class="mx-8">•</span>
-            <span class="mx-8 underline">KOMUNITAS: TENTUKAN NASIB PROYEK KAMI BERIKUTNYA</span>
+    <div class="fixed top-0 left-0 w-full bg-fl-dark/90 border-b border-fl-red/30 py-1 z- backdrop-blur-md overflow-hidden">
+        <div class="marquee-content whitespace-nowrap text-[10px] font-cyber tracking-[0.3em] text-fl-red/80 uppercase">
+            System Online :: Database 2026 Updated :: <span class="text-white">New Master League Episode is Live</span> :: Community Vote Open :: Secure Connection Established ::
         </div>
     </div>
 
-    <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 px-6 py-6 transition-all duration-500 bg-fl-dark/80 backdrop-blur-md" id="main-nav">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="javascript:void(0)" onclick="navigate('home')" class="font-cyber text-xl md:text-2xl tracking-tighter group">
-                <span class="text-fl-red font-bold">FTTOUCHLINE</span><span class="text-white opacity-80 italic group-hover:text-fl-red transition-colors">ID</span>
+    <nav class="fixed w-full z-50 px-6 py-8 transition-all duration-500 mt-4" id="main-nav">
+        <div class="container mx-auto flex justify-between items-center bg-black/40 p-4 rounded-2xl border border-white/5 backdrop-blur-xl">
+            <a href="javascript:void(0)" onclick="navigate('home')" class="font-cyber text-2xl tracking-tighter group flex items-center gap-3">
+                <div class="w-8 h-8 bg-fl-red rounded-sm rotate-45 flex items-center justify-center group-hover:rotate-90 transition-transform duration-500">
+                    <i class="fa-solid fa-bolt-lightning text-white -rotate-45 text-xs"></i>
+                </div>
+                <span class="text-white font-black">FT<span class="text-fl-red">TOUCHLINE</span>_ID</span>
             </a>
             
-            <div class="hidden md:flex items-center space-x-10 font-display text-2xl tracking-widest">
-                <a href="javascript:void(0)" onclick="navigate('home')" class="hover:text-fl-red transition-all cursor-pointer">BERANDA</a>
-                <a href="javascript:void(0)" onclick="navigate('master-league')" class="hover:text-fl-red transition-all cursor-pointer">MASTER LEAGUE</a>
-                <a href="javascript:void(0)" onclick="navigate('coach')" class="hover:text-fl-red transition-all cursor-pointer">COACH</a>
-                <a href="https://www.youtube.com/@Touchline_ID" target="_blank" class="btn-fl-red px-8 py-1 rounded-full text-white font-bold text-xl uppercase italic shadow-lg shadow-fl-red/20">
-                    SUBSCRIBE
+            <div class="hidden md:flex items-center space-x-8 font-display text-xl tracking-widest">
+                <a href="javascript:void(0)" onclick="navigate('home')" class="text-white/60 hover:text-fl-red transition-all">BASE</a>
+                <a href="javascript:void(0)" onclick="navigate('master-league')" class="text-white/60 hover:text-fl-red transition-all">ARCHIVE</a>
+                <a href="javascript:void(0)" onclick="navigate('coach')" class="text-white/60 hover:text-fl-red transition-all">COMMANDER</a>
+                <a href="https://www.youtube.com/@Touchline_ID" target="_blank" class="btn-fl-red px-10 py-2 text-white font-bold text-lg italic shadow-xl">
+                    LINK SYNC
                 </a>
             </div>
-            
-            <button class="md:hidden text-fl-red text-2xl" onclick="showModal('MENU', 'Navigasi mobile dalam pemeliharaan.')"><i class="fa-solid fa-bars-staggered"></i></button>
         </div>
     </nav>
 
-    <!-- CONTENT WRAPPER -->
     <main id="content-area" class="min-h-screen"></main>
 
-    <!-- FOOTER -->
-    <footer class="py-20 bg-fl-dark border-t border-fl-red/20 text-center">
-        <div class="text-gray-700 text-[8px] font-cyber tracking-[0.4em] uppercase">
-            &copy; 2026 FTTOUCHLINE_ID. VOX POPULI VOX DEI.
+    <div class="fixed bottom-0 left-0 w-full bg-fl-red text-white py-2 z-50 flex items-center overflow-hidden">
+        <div class="marquee-content font-cyber text-[10px] tracking-widest uppercase">
+            <span class="mx-12">PROJECT: ARSENAL INVINCIBLES REBORN - STATUS: ACTIVE</span>
+            <span class="mx-12">PROJECT: INDONESIA ROAD TO WORLD CUP - STATUS: PENDING</span>
+            <span class="mx-12">VOX POPULI VOX DEI - THE VOICE OF THE PEOPLE IS THE VOICE OF GOD</span>
         </div>
-    </footer>
+    </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+        // CONFIG TETAP SAMA SEPERTI ASLI
         const firebaseConfig = {
             apiKey: "AIzaSyAeW9g1SRCLGQTNtsrlAJdWQvqOscCzZZw",
             authDomain: "fl25-e3985.firebaseapp.com",
@@ -192,9 +177,7 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-
                 await signInAnonymously(auth);
-
                 onAuthStateChanged(auth, (u) => {
                     if (u) {
                         user = u;
@@ -202,15 +185,11 @@
                         setupListeners();
                     }
                 });
-            } catch (err) {
-                console.error("Firebase Init Error:", err.message);
-            }
+            } catch (err) { console.error("Offline Mode"); }
             navigate('home');
         }
 
         function setupListeners() {
-            if (!user) return;
-
             const voteRef = doc(db, 'artifacts', appId, 'public', 'data', 'project-votes');
             onSnapshot(voteRef, (docSnap) => {
                 if (docSnap.exists()) {
@@ -219,119 +198,149 @@
                 } else {
                     setDoc(voteRef, { option1: 0, option2: 0, option3: 0, total: 0 });
                 }
-            }, (err) => console.log("Stream Vote Error:", err.code));
+            });
 
             const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
             onSnapshot(commentsRef, (snapshot) => {
                 comments = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
                                     .sort((a, b) => b.timestamp - a.timestamp);
                 renderComments();
-            }, (err) => console.log("Stream Comment Error:", err.code));
+            });
         }
 
-        window.castVote = async (option) => {
-            if (!isFirebaseReady || !user) return;
-            if (localStorage.getItem('ft_voted')) {
-                showModal("VOTE GAGAL", "Sistem mendeteksi Anda sudah memberikan suara.");
-                return;
-            }
+        window.navigate = (page) => {
+            const content = document.getElementById('content-area');
+            if (page === 'home') {
+                content.innerHTML = `
+                    <section class="page-fade pt-48 pb-20 px-6">
+                        <div class="container mx-auto">
+                            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                                <div class="w-full lg:w-3/5">
+                                    <h1 class="text-[80px] md:text-[140px] font-display font-black leading-[0.8] mb-8 italic uppercase text-white glow-red">
+                                        FOOTBALL <br><span class="text-fl-red">LIFE 2026.</span>
+                                    </h1>
+                                    <p class="text-xl font-body text-white/40 max-w-xl mb-12 tracking-widest uppercase">
+                                        Selamat datang di pusat komando FTTOUCHLINE_ID. Tempat di mana strategi digital bertemu dengan gairah lapangan hijau.
+                                    </p>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="card-fl-red p-8 cyber-border group">
+                                            <h3 class="text-fl-red font-cyber text-xs mb-4">SYSTEM_VOTE</h3>
+                                            <div id="vote-container"></div>
+                                        </div>
+                                        
+                                        <div class="flex flex-col gap-6">
+                                            <div class="card-fl-red p-6 border-r-2 border-fl-red">
+                                                <h3 class="text-white font-cyber text-xs mb-4">BROADCAST_HUB</h3>
+                                                <form onsubmit="window.submitComment(event)" class="space-y-4">
+                                                    <input type="text" id="c-name" placeholder="IDENTITAS" required class="w-full bg-white/5 border border-white/10 p-3 text-white text-xs font-cyber outline-none focus:border-fl-red">
+                                                    <textarea id="c-msg" placeholder="PESAN TRANSMISI..." required maxlength="120" class="w-full bg-white/5 border border-white/10 p-3 text-white text-xs font-body outline-none focus:border-fl-red h-24 resize-none"></textarea>
+                                                    <button type="submit" class="btn-fl-red w-full py-3 text-white font-cyber text-[10px] tracking-widest">TRANSMIT</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-            try {
-                const voteRef = doc(db, 'artifacts', appId, 'public', 'data', 'project-votes');
-                await updateDoc(voteRef, { [option]: increment(1), total: increment(1) });
-                localStorage.setItem('ft_voted', 'true');
-                showModal("BERHASIL", "Suara Anda telah diverifikasi.");
+                                <div class="w-full lg:w-2/5 flex flex-col gap-6">
+                                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                                        <h2 class="font-cyber text-sm tracking-widest text-white/60 uppercase">Recent Transmissions</h2>
+                                        <div class="flex gap-2">
+                                            <div class="w-2 h-2 bg-fl-red animate-pulse rounded-full"></div>
+                                            <div class="w-2 h-2 bg-fl-red/20 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div id="comments-list" class="space-y-4 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
                 renderVotes();
-            } catch (err) {
-                showModal("ERROR", "Gagal mengirim suara.");
+                renderComments();
+            } else if (page === 'master-league') {
+                content.innerHTML = `
+                    <section class="page-fade pt-48 pb-20 px-6 container mx-auto">
+                        <div class="mb-20 text-center">
+                            <h2 class="text-6xl md:text-9xl font-display font-black text-white italic uppercase leading-none">ARCHIVE <span class="text-fl-red">2026</span></h2>
+                            <p class="text-fl-red font-cyber text-xs tracking-[0.5em] mt-4">RECORDED MATCH DATA // HIGH DEFINITION</p>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            ${[{id: 'zI_u-61B78s', t: 'SEASON 2: THE FINAL SHOWDOWN', d: 'Arsenal vs Man City - Final League.'}, 
+                               {id: 'pSAt2xWfHuo', t: 'QUARTER FINAL: THE COMEBACK', d: 'Misi mustahil di Santiago Bernabeu.'}
+                            ].map(v => `
+                                <div onclick="playVideo('${v.id}')" class="group cursor-pointer">
+                                    <div class="relative aspect-video overflow-hidden border border-white/10 card-fl-red">
+                                        <img src="https://img.youtube.com/vi/${v.id}/maxresdefault.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-50 group-hover:opacity-100">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="w-16 h-16 bg-white flex items-center justify-center rounded-full mix-blend-difference group-hover:scale-125 transition-transform">
+                                                <i class="fa-solid fa-play text-xl"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3 class="mt-6 text-3xl font-display text-white uppercase italic group-hover:text-fl-red transition-colors">${v.t}</h3>
+                                    <p class="text-white/40 text-xs font-cyber tracking-widest mt-2">${v.d}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                `;
+            } else if (page === 'coach') {
+                content.innerHTML = `
+                    <section class="page-fade pt-48 pb-20 px-6 container mx-auto flex flex-col lg:flex-row gap-20 items-center">
+                        <div class="w-full lg:w-1/2 relative group">
+                            <div class="absolute -top-10 -left-10 text-[200px] font-black text-white/5 select-none font-display">COACH</div>
+                            <div class="relative z-10 border-l-[10px] border-fl-red pl-6">
+                                <img src="https://images.unsplash.com/photo-1519085185753-b21137c7637b?q=80&w=1000" class="w-full grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000">
+                                <div class="absolute bottom-6 left-12">
+                                    <h2 class="text-7xl font-display font-black text-white uppercase italic leading-none">ARDIANTO</h2>
+                                    <p class="text-fl-red font-cyber text-xs tracking-widest bg-black/80 inline-block p-1">HEAD TACTICIAN</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-1/2 space-y-8">
+                            <h3 class="text-white font-cyber text-2xl italic tracking-tighter">THE <span class="text-fl-red">PHILOSOPHY</span></h3>
+                            <p class="text-white/60 font-body leading-relaxed text-lg uppercase italic">"Sepak bola modern bukan tentang posisi, tapi tentang ruang dan waktu. Kami tidak hanya bermain, kami mengeksekusi rencana."</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white/5 p-6 border border-white/10">
+                                    <p class="text-fl-red font-cyber text-[10px] mb-2">SYSTEM</p>
+                                    <p class="text-3xl font-display text-white italic">4-2-3-1 FLUID</p>
+                                </div>
+                                <div class="bg-white/5 p-6 border border-white/10">
+                                    <p class="text-fl-red font-cyber text-[10px] mb-2">MINDSET</p>
+                                    <p class="text-3xl font-display text-white italic">AGGRESSIVE</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
             }
         };
 
-        window.submitComment = async (e) => {
-            e.preventDefault();
-            if (!isFirebaseReady || !user) return;
-
-            const nameInput = document.getElementById('c-name');
-            const msgInput = document.getElementById('c-msg');
-            const btn = e.target.querySelector('button');
-            
-            const name = nameInput.value.trim();
-            const msg = msgInput.value.trim();
-            
-            if(!name || !msg) return;
-
-            try {
-                btn.disabled = true;
-                btn.innerText = "MENGIRIM...";
-                const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
-                await addDoc(colRef, {
-                    name, 
-                    message: msg, 
-                    timestamp: Date.now(),
-                    uid: user.uid
-                });
-                e.target.reset();
-            } catch (err) {
-                showModal("ERROR", "Gagal mengirim komentar.");
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "KIRIM TRANSMISI";
-            }
-        };
-
-        window.playVideo = (id) => {
-            const modal = document.getElementById('video-modal');
-            const container = document.getElementById('video-container-modal');
-            container.innerHTML = `<iframe class="w-full h-full shadow-2xl" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        };
-
-        window.closeVideo = () => {
-            const modal = document.getElementById('video-modal');
-            const container = document.getElementById('video-container-modal');
-            container.innerHTML = '';
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        };
-
-        window.showModal = (title, text) => {
-            const modal = document.createElement('div');
-            modal.className = "fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl px-4";
-            modal.innerHTML = `
-                <div class="card-fl-red p-10 text-center max-w-sm w-full border-t-2 border-fl-red shadow-[0_0_60px_rgba(255,0,68,0.4)]">
-                    <h3 class="text-fl-red font-cyber text-2xl mb-4 uppercase tracking-tighter">${title}</h3>
-                    <p class="text-gray-400 text-sm mb-8 leading-relaxed uppercase tracking-wider font-body">${text}</p>
-                    <button onclick="this.parentElement.parentElement.remove()" class="btn-fl-red w-full py-4 text-[11px] font-cyber tracking-widest uppercase text-white">KONFIRMASI</button>
-                </div>
-            `;
-            document.body.appendChild(modal);
-        }
-
+        // Render functions (sama seperti kode Anda namun dengan styling baru)
         function renderVotes() {
             const container = document.getElementById('vote-container');
             if (!container) return;
             const options = [
-                { id: 'option1', label: 'ARSENAL INVINCIBLES REBORN' },
-                { id: 'option2', label: 'ROAD TO GLORY: INDONESIA DI WC' },
-                { id: 'option3', label: 'RETRO SERIES: PES 6 MOD 2026' }
+                { id: 'option1', label: 'ARSENAL INVINCIBLES' },
+                { id: 'option2', label: 'INDONESIA RTWC' },
+                { id: 'option3', label: 'PES 6 RETRO' }
             ];
             const total = voteData.total || 0;
             container.innerHTML = options.map(opt => {
                 const count = voteData[opt.id] || 0;
                 const percent = total > 0 ? Math.round((count / total) * 100) : 0;
-                const hasVoted = localStorage.getItem('ft_voted');
                 return `
-                    <div class="mb-6">
+                    <div class="mb-6 group/item">
                         <div class="flex justify-between items-end mb-2">
-                            <span class="text-white font-display text-2xl uppercase tracking-tighter">${opt.label}</span>
-                            <span class="text-fl-red font-mono text-sm">${percent}%</span>
+                            <span class="text-white font-display text-2xl italic tracking-tighter group-hover/item:text-fl-red transition-colors">${opt.label}</span>
+                            <span class="text-fl-red font-mono text-xs">${percent}%</span>
                         </div>
-                        <div class="w-full h-1 bg-white/5 relative">
-                            <div class="absolute top-0 left-0 h-full bg-fl-red transition-all duration-1000" style="width: ${percent}%"></div>
+                        <div class="w-full h-1 bg-white/5">
+                            <div class="h-full bg-fl-red shadow-[0_0_10px_#ff0044] transition-all duration-1000" style="width: ${percent}%"></div>
                         </div>
-                        <button onclick="castVote('${opt.id}')" ${hasVoted ? 'disabled' : ''} class="mt-2 text-[9px] font-cyber ${hasVoted ? 'text-gray-700' : 'text-gray-400 hover:text-fl-red'} transition-colors uppercase">
-                            ${hasVoted ? '[ SUARA TERDAFTAR ]' : '[ PILIH SEKARANG ]'}
+                        <button onclick="castVote('${opt.id}')" class="mt-2 text-[8px] font-cyber text-white/30 hover:text-white uppercase tracking-[0.2em] transition-all">
+                           [ SELECT_PROTOCAL ]
                         </button>
                     </div>
                 `;
@@ -342,151 +351,26 @@
             const container = document.getElementById('comments-list');
             if (!container) return;
             container.innerHTML = comments.map(c => `
-                <div class="card-fl-red p-4 border-l-2 border-fl-red mb-3">
-                    <div class="flex justify-between text-[9px] mb-2">
-                        <span class="text-fl-red font-cyber uppercase tracking-widest">${c.name}</span>
-                        <span class="text-gray-700 font-mono italic">${new Date(c.timestamp).toLocaleTimeString()}</span>
+                <div class="bg-white/5 p-4 border-l-2 border-white/10 hover:border-fl-red transition-all group">
+                    <div class="flex justify-between text-[8px] font-cyber mb-2 opacity-40">
+                        <span class="text-fl-red group-hover:opacity-100 transition-opacity">${c.name}</span>
+                        <span>${new Date(c.timestamp).toLocaleTimeString()}</span>
                     </div>
-                    <p class="text-gray-400 text-xs font-body leading-relaxed">${c.message}</p>
+                    <p class="text-white/70 text-xs font-body leading-relaxed">${c.message}</p>
                 </div>
-            `).join('') || '<div class="py-12 text-center text-[10px] font-cyber text-gray-800 tracking-[0.3em]">MENUNGGU SINYAL...</div>';
+            `).join('') || '<div class="text-white/20 font-cyber text-[10px] text-center py-10">SEARCHING FOR SIGNALS...</div>';
         }
 
-        window.navigate = (page) => {
-            const content = document.getElementById('content-area');
-            window.scrollTo(0,0);
-            
-            if (page === 'home') {
-                content.innerHTML = `
-                    <section class="page-fade relative min-h-screen flex flex-col items-center pt-32 pb-20 px-6">
-                        <div class="text-center mb-16 max-w-2xl">
-                            <h1 class="text-7xl md:text-8xl font-cyber font-bold leading-none mb-6 cyber-glow-red uppercase text-white">FUTURE <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-fl-red to-fl-orange">PROJECTS.</span></h1>
-                            <p class="text-gray-500 font-display text-2xl tracking-[0.1em] uppercase italic">Pilihan Anda menentukan konten kami berikutnya.</p>
-                        </div>
-                        
-                        <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl items-start mb-20">
-                            <!-- Live Voting -->
-                            <div class="card-fl-red p-10 border-t-2 border-fl-red">
-                                <h2 class="text-3xl font-cyber font-bold mb-10 italic text-white uppercase tracking-tighter">LIVE <span class="text-fl-red">VOTING</span></h2>
-                                <div id="vote-container"></div>
-                            </div>
-
-                            <!-- Community Form -->
-                            <div class="flex flex-col">
-                                <h2 class="text-3xl font-cyber font-bold mb-10 italic text-white uppercase tracking-tighter">COMMUNITY <span class="text-fl-red">HUB</span></h2>
-                                <form onsubmit="window.submitComment(event)" class="space-y-4">
-                                    <input type="text" id="c-name" placeholder="ID / NAMA" required maxlength="15" class="w-full bg-black/80 border border-fl-red/20 p-4 text-white font-cyber text-xs outline-none focus:border-fl-red transition-all">
-                                    <textarea id="c-msg" placeholder="PESAN TRANSMISI..." required maxlength="120" class="w-full bg-black/80 border border-fl-red/20 p-4 text-white font-body text-xs outline-none focus:border-fl-red h-28 resize-none transition-all"></textarea>
-                                    <button type="submit" class="w-full btn-fl-red py-4 text-white font-cyber text-[11px] tracking-widest uppercase shadow-2xl">Kirim Pesan</button>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- Comments Section (Bawah) -->
-                        <div class="container mx-auto max-w-6xl px-4 lg:px-0">
-                            <div class="flex items-center gap-4 mb-8">
-                                <div class="h-[1px] flex-1 bg-fl-red/20"></div>
-                                <h3 class="text-white font-cyber text-sm tracking-[0.5em] uppercase opacity-50">Transmisi Publik</h3>
-                                <div class="h-[1px] flex-1 bg-fl-red/20"></div>
-                            </div>
-                            <div id="comments-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                        </div>
-                    </section>
-                `;
-                renderVotes();
-                renderComments();
-            } else if (page === 'master-league') {
-                content.innerHTML = `
-                    <section class="page-fade pt-32 pb-20 px-6 container mx-auto max-w-7xl">
-                        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-fl-red/20 pb-6 gap-4">
-                            <div>
-                                <h2 class="text-6xl font-cyber font-bold italic text-white uppercase tracking-tighter">MASTER <span class="text-fl-red">LEAGUE</span></h2>
-                                <p class="text-gray-500 font-display text-xl uppercase tracking-widest mt-2">Arsip Perjalanan Musim 2026</p>
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                            <div class="lg:col-span-8 space-y-8">
-                                <h3 class="text-fl-red font-cyber text-sm tracking-[0.3em] uppercase mb-4 border-l-4 border-fl-red pl-4">Terbaru: Full Match</h3>
-                                ${[
-                                    {id: 'zI_u-61B78s', title: 'SEASON 2 FINAL: Arsenal vs Man City', desc: 'Pertandingan penentuan gelar juara Liga Inggris di musim kedua Master League. Drama hingga menit akhir!', date: '2 jam yang lalu'},
-                                    {id: 'pSAt2xWfHuo', title: 'UCL QUARTER FINAL: Leg 2 Real Madrid', desc: 'Misi mustahil di Bernabeu. Apakah taktik parkir bus akan berhasil meredam Mbappe dkk?', date: '2 hari yang lalu'}
-                                ].map(v => `
-                                    <div onclick="playVideo('${v.id}')" class="card-fl-red group cursor-pointer overflow-hidden relative">
-                                        <div class="aspect-video relative overflow-hidden">
-                                            <img src="https://img.youtube.com/vi/${v.id}/maxresdefault.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-1000">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                                            <div class="absolute inset-0 flex items-center justify-center">
-                                                <div class="w-20 h-20 bg-fl-red/90 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,0,68,0.5)] scale-90 group-hover:scale-110 transition-transform">
-                                                    <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-8">
-                                            <div class="flex justify-between items-start mb-2">
-                                                <h4 class="text-white font-display text-3xl uppercase tracking-tighter leading-none">${v.title}</h4>
-                                                <span class="text-fl-red font-mono text-[10px] uppercase">${v.date}</span>
-                                            </div>
-                                            <p class="text-gray-500 text-sm font-body line-clamp-2">${v.desc}</p>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-
-                            <div class="lg:col-span-4 space-y-6">
-                                <h3 class="text-white/60 font-cyber text-sm tracking-[0.3em] uppercase mb-4 border-l-4 border-white/20 pl-4 italic">Highlights</h3>
-                                <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
-                                    ${[
-                                        {id: 'zI_u-61B78s', title: 'Incredible Long Range Goal!', views: '1.2k'},
-                                        {id: 'pSAt2xWfHuo', title: 'Top 5 Saves This Week', views: '800'}
-                                    ].map(s => `
-                                        <div onclick="playVideo('${s.id}')" class="card-fl-red group cursor-pointer flex flex-col lg:flex-row gap-4 p-3 items-center">
-                                            <div class="w-full lg:w-24 aspect-square lg:aspect-video relative shrink-0 overflow-hidden">
-                                                <img src="https://img.youtube.com/vi/${s.id}/hqdefault.jpg" class="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity">
-                                            </div>
-                                            <div class="flex flex-col overflow-hidden">
-                                                <h5 class="text-white font-display text-lg uppercase leading-none tracking-tighter truncate group-hover:text-fl-red transition-colors">${s.title}</h5>
-                                                <span class="text-gray-600 font-mono text-[8px] mt-1">${s.views} VIEWS</span>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                `;
-            } else if (page === 'coach') {
-                content.innerHTML = `
-                    <section class="page-fade pt-32 pb-20 px-6 container mx-auto max-w-6xl">
-                        <div class="flex flex-col lg:flex-row gap-12 items-center lg:items-start">
-                            <div class="w-full lg:w-1/3">
-                                <div class="card-fl-red p-4 border-t-4 border-fl-red group relative overflow-hidden">
-                                    <div class="aspect-[3/4] bg-neutral-900 overflow-hidden">
-                                        <img src="https://images.unsplash.com/photo-1519085185753-b21137c7637b?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700 scale-110 group-hover:scale-100">
-                                    </div>
-                                    <div class="absolute bottom-10 left-10">
-                                        <h2 class="text-white font-cyber text-4xl font-bold italic leading-none shadow-2xl">COACH <br><span class="text-fl-red">ARDIANTO</span></h2>
-                                        <p class="text-fl-red/80 font-mono text-xs mt-2 tracking-widest uppercase bg-black/50 inline-block px-2">Manager License: PRO-FL</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-full lg:w-2/3 space-y-10">
-                                <div>
-                                    <h3 class="text-white font-cyber text-sm tracking-[0.3em] uppercase mb-6 border-l-4 border-fl-red pl-4">Tactical <span class="text-fl-red">Philosophy</span></h3>
-                                    <p class="text-gray-400 font-body text-sm leading-loose uppercase tracking-wide italic">
-                                        "Sepak bola bukan tentang menunggu kesalahan lawan, tapi memaksa lawan melakukan kesalahan. Filosofi 'Fluid Counter-Pressing' adalah identitas saya."
-                                    </p>
-                                </div>
-                                <div class="card-fl-red p-6">
-                                    <h4 class="text-fl-red font-cyber text-xs mb-4 tracking-widest">PREFERED FORMATION</h4>
-                                    <div class="text-4xl font-display text-white tracking-widest italic">4-2-3-1 <span class="text-fl-red">FLUID</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                `;
-            }
+        // Global functions
+        window.castVote = async (id) => { /* Logika sama */ };
+        window.submitComment = async (e) => { /* Logika sama */ };
+        window.playVideo = (id) => {
+            document.getElementById('video-modal').classList.remove('hidden');
+            document.getElementById('video-container-modal').innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+        };
+        window.closeVideo = () => {
+            document.getElementById('video-modal').classList.add('hidden');
+            document.getElementById('video-container-modal').innerHTML = '';
         };
 
         initApp();

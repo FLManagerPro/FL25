@@ -111,7 +111,7 @@
     </div>
 
     <!-- Top Bar -->
-    <div class="fixed top-0 left-0 w-full bg-fl-dark/95 border-b border-fl-red/40 py-1.5 z-[60] backdrop-blur-md overflow-hidden">
+    <div class="fixed top-0 left-0 width-full bg-fl-dark/95 border-b border-fl-red/40 py-1.5 z-[60] backdrop-blur-md overflow-hidden">
         <div class="marquee-content whitespace-nowrap text-[10px] font-cyber tracking-[0.4em] text-fl-red uppercase">
             System Online :: Database 2026 Ready :: <span class="text-white">New Master League Entry Detected</span> :: User Authorization Required :: Commencing Tactical Link ::
         </div>
@@ -196,8 +196,6 @@
         }
 
         function setupListeners() {
-            // Path corrected to have an even number of segments (6 segments):
-            // 1: artifacts, 2: {appId}, 3: public, 4: data, 5: project-votes-collection, 6: main-doc
             const voteRef = doc(db, 'artifacts', appId, 'public', 'data', 'project-votes-collection', 'main-doc');
             
             onSnapshot(voteRef, (docSnap) => {
@@ -278,7 +276,9 @@
                             <h2 class="text-7xl md:text-9xl font-display font-black text-white italic uppercase leading-none">ARCHIVE <span class="text-fl-red">2026</span></h2>
                             <p class="text-fl-red font-cyber text-xs tracking-[0.5em] mt-4">RECORDED MATCH DATA // ENCRYPTED STORAGE</p>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+                        <!-- Main Videos Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
                             ${[
                                 {id: 'zI_u-61B78s', t: 'ARSENAL: THE FINAL STAND', d: 'Penentuan gelar juara di Matchday terakhir.'}, 
                                 {id: 'pSAt2xWfHuo', t: 'TACTICAL BREAKDOWN: UEL', d: 'Analisis formasi 4-3-3 False Nine.'}
@@ -296,6 +296,29 @@
                                     <p class="text-white/40 text-[10px] font-cyber tracking-widest mt-2 uppercase">${v.d}</p>
                                 </div>
                             `).join('')}
+                        </div>
+
+                        <!-- Shorts Section -->
+                        <div class="border-t border-white/10 pt-16">
+                            <h3 class="text-white font-cyber text-xs tracking-[0.4em] mb-12 uppercase flex items-center gap-4">
+                                <span class="text-fl-red">●</span> QUICK TRANSMISSIONS / SHORTS
+                            </h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                ${[
+                                    {id: 'qOGgK9N5ICw', t: 'TACTICAL HIGHLIGHT 01'},
+                                    {id: 'Tsfh6-rtjfU', t: 'MATCH DAY RECAP'}
+                                ].map(s => `
+                                    <div onclick="playShort('${s.id}')" class="group cursor-pointer">
+                                        <div class="relative aspect-[9/16] overflow-hidden border border-white/5 card-fl-red rounded-lg">
+                                            <img src="https://img.youtube.com/vi/${s.id}/maxresdefault.jpg" class="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
+                                            <div class="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                                <i class="fa-solid fa-bolt-lightning text-fl-red mb-2"></i>
+                                                <span class="text-white font-display text-lg italic uppercase leading-tight">${s.t}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
                         </div>
                     </section>
                 `;
@@ -408,6 +431,13 @@
 
         window.playVideo = (id) => {
             document.getElementById('video-modal').classList.remove('hidden');
+            document.getElementById('video-container-modal').innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.playShort = (id) => {
+            document.getElementById('video-modal').classList.remove('hidden');
+            // Untuk Shorts, rasio 9:16 lebih baik, namun kita gunakan container aspect-video agar konsisten di modal
             document.getElementById('video-container-modal').innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             document.body.style.overflow = 'hidden';
         };
